@@ -14,7 +14,7 @@ private:
 public:
     Matrix(int height, int width, int init=0);
     Matrix(const Matrix& m);
-
+    Matrix& operator=(const Matrix& m);
     int getHeight() const;
     int getWidth() const;
     int* getMatrix();

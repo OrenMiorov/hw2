@@ -22,13 +22,24 @@ Matrix::Matrix(const Matrix &m) {
     }
 }
 
+Matrix &Matrix::operator=(const Matrix &m) {
+    if (this == &m) return *this;
+    delete[] matrix;
+    matrix = new int[height*width];
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            (*this)(i,j) = m(i,j);
+        }
+    }
+    return *this;
+}
+
+
 int Matrix::getHeight() const { return this->height; }
 
 int Matrix::getWidth() const { return this->width; }
 
 int* Matrix::getMatrix() { return this->matrix; }
-
-
 
 int& Matrix::operator()(int h, int w) {
     if (h > height || w > width || h < 0 || w < 0)
