@@ -1,18 +1,20 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 #pragma once
+#include <ostream>
 #include <vector>
 
-#include "Utilities.cpp"
+#include "Utilities.h"
 
 class Matrix {
 private:
-    int width;
-    int height;
+    int width = 0;
+    int height = 0;
     int* matrix = new int[height*width];
 
 public:
     Matrix(int height, int width, int init=0);
+    Matrix();
     Matrix(const Matrix& m);
     Matrix& operator=(const Matrix& m);
     int getHeight() const;
@@ -33,15 +35,16 @@ public:
     Matrix& operator*=(int num);
     bool operator==(const Matrix& m);
     bool operator!=(const Matrix& m);
-    Matrix& rotateClockWise();
-    Matrix& rotateCounterClockWise();
+    Matrix& rotateClockwise();
+    Matrix& rotateCounterClockwise();
     Matrix& transpose();
     static double CalcFrobeniusNorm(const Matrix& m);
 
-    Matrix() = default;
     ~Matrix() = default;
 
 };
+Matrix operator*(int num, const Matrix& m);
+
 
 
 #endif //MATRIX_H

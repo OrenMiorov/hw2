@@ -1,20 +1,22 @@
-#pragma once
 #include "Matrix.h"
-#include "Utilities.cpp"
+
+#include <iostream>
+
+#include "Utilities.h"
 #include "cmath"
+#include "MataMvidia.h"
 
 Matrix::Matrix(int height, int width, int init) : width(width), height(height) {
-    if (init == 0) matrix = new int[height*width]();
+    if (height <= 0 || width <= 0) exitWithError(MatamErrorType::OutOfBounds);
     matrix = new int[height*width];
     for (int i = 0; i < height*width; i++) {
         this->matrix[i] = init;
     }
 }
 
-Matrix::Matrix(const Matrix &m) {
-    height = m.height;
-    width = m.width;
-    matrix = new int[height*width]();
+Matrix::Matrix() : width(0), height(0), matrix(nullptr) {}
+
+Matrix::Matrix(const Matrix &m): width(m.height), height(m.width), matrix(new int[m.height * m.width]) {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             (*this)(i,j) = m(i,j);
@@ -25,6 +27,8 @@ Matrix::Matrix(const Matrix &m) {
 Matrix &Matrix::operator=(const Matrix &m) {
     if (this == &m) return *this;
     delete[] matrix;
+    height = m.height;
+    width = m.width;
     matrix = new int[height*width];
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -42,13 +46,13 @@ int Matrix::getWidth() const { return this->width; }
 int* Matrix::getMatrix() { return this->matrix; }
 
 int& Matrix::operator()(int h, int w) {
-    if (h > height || w > width || h < 0 || w < 0)
+    if (h >= height || w >= width || h < 0 || w < 0)
         exitWithError(MatamErrorType::OutOfBounds);
     return this->matrix[h*width+w];
 }
 
 const int &Matrix::operator()(int h, int w) const {
-    if (h > height || w > width || h < 0 || w < 0)
+    if (h >= height || w >= width || h < 0 || w < 0)
         exitWithError(MatamErrorType::OutOfBounds);
     return this->matrix[h*width+w];
 }
@@ -68,8 +72,8 @@ Matrix Matrix::operator+(const Matrix &m) const {
     if (height != m.height || width != m.width)
         exitWithError(MatamErrorType::UnmatchedSizes);
     Matrix res(height,width);
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             res(i,j) = (*this)(i,j) + m(i,j);
         }
     }
@@ -85,8 +89,8 @@ Matrix Matrix::operator-(const Matrix &m) const {
     if (height != m.height || width != m.width)
         exitWithError(MatamErrorType::UnmatchedSizes);
     Matrix res(height,width);
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             res(i,j) = (*this)(i,j) - m(i,j);
         }
     }
@@ -94,8 +98,8 @@ Matrix Matrix::operator-(const Matrix &m) const {
 }
 
 Matrix& Matrix::operator-() {
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             (*this)(i,j) = -1 * (*this)(i,j);
         }
     }
@@ -159,10 +163,10 @@ bool Matrix::operator!=(const Matrix &m) {
     return !(*this == m);
 }
 
-Matrix &Matrix::rotateClockWise() {
+Matrix &Matrix::rotateClockwise() {
     Matrix res(width,height);
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
             res(i,j) = (*this)(width-j-1,i);
         }
     }
@@ -170,10 +174,10 @@ Matrix &Matrix::rotateClockWise() {
     return *this;
 }
 
-Matrix &Matrix::rotateCounterClockWise() {
+Matrix &Matrix::rotateCounterClockwise() {
     Matrix res(width,height);
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
             res(i,j) = (*this)(j,width-i-1);
         }
     }
@@ -196,9 +200,11 @@ double Matrix::CalcFrobeniusNorm(const Matrix &m) {
     double result = 0;
     for (int i = 0; i < m.getHeight(); i++) {
         for (int j = 0; j < m.getWidth(); j++) {
-            result += std::pow(std::abs(m(j,i)),2);
+            result += std::pow(std::abs(m(i,j)),2);
         }
     }
     return std::sqrt(result);
 }
+
+
 
