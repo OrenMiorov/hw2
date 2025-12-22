@@ -27,8 +27,9 @@ std::string Pirate::getName(){
 }
 
 
-DEVIL_FRUIT Pirate::getDevilFruit(){
+DEVIL_FRUIT Pirate::getDevilFruit() {
     return devilFruit;
+}
 
 void Pirate::setBounty(int bounty) {
     this->bounty = bounty;
