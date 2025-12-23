@@ -14,8 +14,6 @@ Matrix::Matrix(int height, int width, int init) : width(width), height(height) {
     }
 }
 
-Matrix::Matrix() : width(0), height(0), matrix(nullptr) {}
-
 Matrix::Matrix(const Matrix &m): width(m.height), height(m.width), matrix(new int[m.height * m.width]) {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
