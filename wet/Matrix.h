@@ -39,7 +39,7 @@ public:
     Matrix& transpose();
     static double CalcFrobeniusNorm(const Matrix& m);
 
-    ~Matrix() = default;
+    ~Matrix();
 
 };
 Matrix operator*(int num, const Matrix& m);

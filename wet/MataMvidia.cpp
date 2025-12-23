@@ -11,13 +11,17 @@ MataMvidia::MataMvidia(std::string movie, std::string author, Matrix *frames, in
 }
 
 MataMvidia::MataMvidia(const MataMvidia &m) {
-    movieName = m.authorName;
+    movieName = m.movieName;
     authorName = m.authorName;
     frameCount = m.frameCount;
     this->frames = new Matrix[frameCount];
     for (int i = 0; i < frameCount; i++) {
         this->frames[i] = Matrix(m.frames[i]);
     }
+}
+
+MataMvidia::~MataMvidia() {
+    delete[] frames;
 }
 
 MataMvidia &MataMvidia::operator=(const MataMvidia &m) {
@@ -33,7 +37,7 @@ MataMvidia &MataMvidia::operator=(const MataMvidia &m) {
     return *this;
 }
 
-Matrix &MataMvidia::operator[](int idx) const {
+Matrix &MataMvidia::operator[](const int idx) const {
     return frames[idx];
 }
 

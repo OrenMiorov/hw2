@@ -13,7 +13,7 @@ public:
     MataMvidia(std::string movie, std::string author, Matrix* frames, int count);
     MataMvidia(const MataMvidia& m);
     MataMvidia() = default;
-    ~MataMvidia() = default;
+    ~MataMvidia();
     MataMvidia& operator=(const MataMvidia& m);
     Matrix& operator[](int idx) const;
     MataMvidia& operator+=(const MataMvidia& m);

@@ -14,12 +14,16 @@ Matrix::Matrix(int height, int width, int init) : width(width), height(height) {
     }
 }
 
-Matrix::Matrix(const Matrix &m): width(m.height), height(m.width), matrix(new int[m.height * m.width]) {
+Matrix::Matrix(const Matrix &m): width(m.width), height(m.height), matrix(new int[m.height * m.width]) {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             (*this)(i,j) = m(i,j);
         }
     }
+}
+
+Matrix::~Matrix() {
+    delete[] matrix;
 }
 
 Matrix &Matrix::operator=(const Matrix &m) {
