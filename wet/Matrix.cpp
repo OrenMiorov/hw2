@@ -1,17 +1,16 @@
 #include "Matrix.h"
-
 #include <iostream>
-
 #include "Utilities.h"
 #include "cmath"
-#include "MataMvidia.h"
 
 Matrix::Matrix(int height, int width, int init) : width(width), height(height) {
-    if (height <= 0 || width <= 0) exitWithError(MatamErrorType::OutOfBounds);
-    matrix = new int[height*width];
+    if (height <= 0 || width <= 0)
+        exitWithError(MatamErrorType::OutOfBounds);
+    int* temp = new int[height*width];
     for (int i = 0; i < height*width; i++) {
-        this->matrix[i] = init;
+        temp[i] = init;
     }
+    this->matrix = temp;
 }
 
 Matrix::Matrix(const Matrix &m): width(m.width), height(m.height), matrix(new int[m.height * m.width]) {

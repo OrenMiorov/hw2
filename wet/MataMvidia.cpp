@@ -1,23 +1,29 @@
 #include "MataMvidia.h"
 
 MataMvidia::MataMvidia(std::string movie, std::string author, Matrix *frames, int count) {
+    if (count <= 0) {
+        this->frames = nullptr;
+        return;
+    }
     movieName = std::move(movie);
     authorName = std::move(author);
     frameCount = count;
-    this->frames = new Matrix[count];
+    Matrix* temp = new Matrix[count];
     for (int i = 0; i < count; i++) {
-        this->frames[i] = Matrix(frames[i]);
+        temp[i] = Matrix(frames[i]);
     }
+    this->frames = temp;
 }
 
 MataMvidia::MataMvidia(const MataMvidia &m) {
     movieName = m.movieName;
     authorName = m.authorName;
     frameCount = m.frameCount;
-    this->frames = new Matrix[frameCount];
+    Matrix* temp = new Matrix[frameCount];
     for (int i = 0; i < frameCount; i++) {
-        this->frames[i] = Matrix(m.frames[i]);
+        temp[i] = Matrix(m.frames[i]);
     }
+    this->frames = temp;
 }
 
 MataMvidia::~MataMvidia() {

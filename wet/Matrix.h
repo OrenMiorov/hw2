@@ -9,7 +9,7 @@ class Matrix {
 private:
     int width = 0;
     int height = 0;
-    int* matrix = new int[height*width];
+    int* matrix = nullptr;
 
 public:
     Matrix(int height, int width, int init=0);

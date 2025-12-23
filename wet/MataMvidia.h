@@ -6,7 +6,7 @@
 class MataMvidia {
 private:
     int frameCount = 0;
-    Matrix* frames = new Matrix[frameCount];
+    Matrix* frames = nullptr;
     std::string movieName;
     std::string authorName;
 public:
