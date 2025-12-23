@@ -2,7 +2,6 @@
 #define MATRIX_H
 #pragma once
 #include <ostream>
-#include <vector>
 
 #include "Utilities.h"
 
