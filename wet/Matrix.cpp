@@ -98,7 +98,7 @@ Matrix Matrix::operator-(const Matrix &m) const {
     return res;
 }
 
-Matrix& Matrix::operator-() const {
+Matrix Matrix::operator-() const {
     Matrix res(height, width);
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
