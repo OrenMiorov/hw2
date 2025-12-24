@@ -15,11 +15,12 @@ public:
     MataMvidia() = default;
     ~MataMvidia();
     MataMvidia& operator=(const MataMvidia& m);
-    Matrix& operator[](int idx) const;
+    Matrix& operator[](int idx);
+    const Matrix& operator[](int idx) const;
     MataMvidia& operator+=(const MataMvidia& m);
     MataMvidia& operator+=(const Matrix& m);
     MataMvidia operator+(const MataMvidia& m) const;
-    friend std::ostream& operator<<(std::ostream &os, MataMvidia &m);
+    friend std::ostream& operator<<(std::ostream &os, const MataMvidia &m);
 
 
 };

@@ -98,13 +98,14 @@ Matrix Matrix::operator-(const Matrix &m) const {
     return res;
 }
 
-Matrix& Matrix::operator-() {
+Matrix& Matrix::operator-() const {
+    Matrix res(height, width);
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            (*this)(i,j) = -1 * (*this)(i,j);
+            res(i,j) = -1 * (*this)(i,j);
         }
     }
-    return *this;
+    return res;
 }
 
 Matrix &Matrix::operator-=(const Matrix &m) {
@@ -150,7 +151,7 @@ Matrix &Matrix::operator*=(int num) {
     return *this;
 }
 
-bool Matrix::operator==(const Matrix &m) {
+bool Matrix::operator==(const Matrix& m) const {
     if (height != m.height || width != m.width) return false;
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -160,41 +161,38 @@ bool Matrix::operator==(const Matrix &m) {
     return true;
 }
 
-bool Matrix::operator!=(const Matrix &m) {
+bool Matrix::operator!=(const Matrix& m) const {
     return !(*this == m);
 }
 
-Matrix &Matrix::rotateClockwise() {
-    Matrix res(width,height);
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            res(i,j) = (*this)(width-j-1,i);
+Matrix Matrix::rotateClockwise() const {
+    Matrix res(width, height);
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            res(j, height - i - 1) = (*this)(i, j);
         }
     }
-    *this = res;
-    return *this;
+    return res;
 }
 
-Matrix &Matrix::rotateCounterClockwise() {
+Matrix Matrix::rotateCounterClockwise() const {
     Matrix res(width,height);
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             res(i,j) = (*this)(j,width-i-1);
         }
     }
-    *this = res;
-    return *this;
+    return res;
 }
 
-Matrix &Matrix::transpose() {
-    Matrix res(width,height);
+Matrix Matrix::transpose() const {
+    Matrix res(width, height);
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            res(i,j) = (*this)(j,i);
+            res(j, i) = (*this)(i, j);
         }
     }
-    *this = res;
-    return *this;
+    return res;
 }
 
 double Matrix::CalcFrobeniusNorm(const Matrix &m) {
@@ -206,6 +204,3 @@ double Matrix::CalcFrobeniusNorm(const Matrix &m) {
     }
     return std::sqrt(result);
 }
-
-
-

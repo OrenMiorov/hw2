@@ -27,16 +27,16 @@ public:
     Matrix& operator+=(const Matrix& m);
     Matrix operator*(const Matrix& m) const;
     Matrix operator-(const Matrix& m) const;
-    Matrix& operator-();
+    Matrix& operator-() const;
     Matrix& operator-=(const Matrix& m);
     Matrix operator*(int num) const;
     Matrix& operator*=(const Matrix& m);
     Matrix& operator*=(int num);
-    bool operator==(const Matrix& m);
-    bool operator!=(const Matrix& m);
-    Matrix& rotateClockwise();
-    Matrix& rotateCounterClockwise();
-    Matrix& transpose();
+    bool operator==(const Matrix& m) const;
+    bool operator!=(const Matrix& m) const;
+    Matrix rotateClockwise() const;
+    Matrix rotateCounterClockwise() const;
+    Matrix transpose() const;
     static double CalcFrobeniusNorm(const Matrix& m);
 
     ~Matrix();

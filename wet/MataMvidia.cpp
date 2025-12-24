@@ -1,12 +1,13 @@
 #include "MataMvidia.h"
 
 MataMvidia::MataMvidia(std::string movie, std::string author, Matrix *frames, int count) {
-    if (count <= 0) {
-        this->frames = nullptr;
-        return;
-    }
     movieName = std::move(movie);
     authorName = std::move(author);
+    if (count <= 0) {
+        this->frames = nullptr;
+        frameCount = 0;
+        return;
+    }
     frameCount = count;
     Matrix* temp = new Matrix[count];
     for (int i = 0; i < count; i++) {
@@ -43,7 +44,17 @@ MataMvidia &MataMvidia::operator=(const MataMvidia &m) {
     return *this;
 }
 
-Matrix &MataMvidia::operator[](const int idx) const {
+Matrix& MataMvidia::operator[](const int idx) {
+    if (idx < 0 || idx >= frameCount) {
+        exitWithError(MatamErrorType::OutOfBounds);
+    }
+    return frames[idx];
+}
+
+const Matrix& MataMvidia::operator[](const int idx) const {
+    if (idx < 0 || idx >= frameCount) {
+        exitWithError(MatamErrorType::OutOfBounds);
+    }
     return frames[idx];
 }
 
@@ -78,12 +89,12 @@ MataMvidia &MataMvidia::operator+=(const Matrix &m) {
     return *this;
 }
 
-std::ostream& operator<<(std::ostream &os, MataMvidia &m) {
+std::ostream& operator<<(std::ostream &os, const MataMvidia &m) {
     os << "Movie Name: " << m.movieName << std::endl;
     os << "Author: " << m.authorName << std::endl;
     for (int i = 0; i < m.frameCount; i++) {
-        os << "Frame " << i << ": " << std::endl;
-        os << m[i] << std::endl;
+        os << "Frame " << i << ":" << std::endl;
+        os << m[i];
     }
     os << "-----End of Movie-----" << std::endl;
     return os;
